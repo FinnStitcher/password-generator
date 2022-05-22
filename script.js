@@ -4,6 +4,7 @@ function generatePassword() {
     var characterString = "";
     var passwordLength = window.prompt("Enter a number between 8 and 128 to be the length of your password.");
     passwordLength = parseInt(passwordLength);
+    var passwordInProgress = "";
     
     // make sure a valid number was input
     if (isNaN(passwordLength)) {
@@ -30,7 +31,6 @@ function generatePassword() {
         };
         if (useSpecial) {
             characterString += "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'";
-            console.log(characterString);
         };
 
         // make sure they didn't click no to everything
@@ -38,7 +38,16 @@ function generatePassword() {
             window.alert("You disabled all character types, so a password can't be generated. Try again.");
         };
 
-        // PUT RANDOM NUMBER GENERATOR HERE
+        var charactersNumber = characterString.length;
+
+        // this feels like it SHOULD be i <= passwordLength, but this is not the case because i is initialized as 0
+        for (var i = 0; i < passwordLength; i++) {
+            var currentCharacter = Math.floor(Math.random() * charactersNumber);
+            passwordInProgress += characterString[currentCharacter];
+            console.log(passwordInProgress);
+        }
+
+        return passwordInProgress;
     }
 };
 
@@ -46,9 +55,6 @@ function generatePassword() {
 
 
 
-// var password is set to the result of generatePassword()
-// var passwordText is set to the textarea on the page where the password will be printed
-// passwordText.value - the contents of the text area - is assigned the value of password
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -66,9 +72,9 @@ generateBtn.addEventListener("click", writePassword);
 // clicking "generate password" calls writePassword()
 // writePassword() calls generatePassword()
     // generatePassword() requests a number (passwordLength) between 8 and 128 for the length
-        // this data is validated to make sure it's actually a number, and then converted to an integer value
-    // generatePassword() concatenates multiple strings to make a list of possible characters
-    // Math() is used to generate a bunch of random numbers within a certain range
-    // each number is used as the index of a character in possibleCharacters, which is then added to a new string, newPassword
-    // return newPassword;
+    // generatePassword() concatenates multiple strings to make a list of possible characters, a string called characterString
+    // the length of characterString is stored
+    // a for loop runs passwordLength times, each time using Math.random() to generate a number between 0 and characterString
+    // that number is used as the index of a character in characterString, which is concatenated into passwordInProgress
+    // return passwordInProgress;
 // generatePassword() returns a value that is used by writePassword(), which can then continue and display the generated password
