@@ -40,12 +40,14 @@ function generatePassword() {
 
         var charactersNumber = characterString.length;
 
-        // this feels like it SHOULD be i <= passwordLength, but this is not the case because i is initialized as 0
-        for (var i = 0; i < passwordLength; i++) {
-            var currentCharacter = Math.floor(Math.random() * charactersNumber);
-            passwordInProgress += characterString[currentCharacter];
-            console.log(passwordInProgress);
-        }
+        if (characterString !== "") {
+            // this feels like it SHOULD be i <= passwordLength, but this is not the case because i is initialized as 0
+            for (var i = 0; i < passwordLength; i++) {
+                var currentCharacter = Math.floor(Math.random() * charactersNumber);
+                passwordInProgress += characterString[currentCharacter];
+                console.log(passwordInProgress);
+            };            
+        };
 
         return passwordInProgress;
     }
@@ -59,7 +61,9 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  if (password !== undefined) {
+      passwordText.value = password;
+  };
 };
 
 // Get references to the #generate element
